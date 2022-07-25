@@ -56,10 +56,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: 'patch'
       - name: Deployment Success
-          uses: rjstone/discord-webhook-notify@v1
-          if: success()
-            severity: info
-            details: A new version of Pokedex deployed!
-            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-
-
+        uses: rjstone/discord-webhook-notify@v1
+        if: success()
+        with:
+          severity: info
+          details: A new version of Pokedex deployed!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
