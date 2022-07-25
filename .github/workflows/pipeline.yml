@@ -55,6 +55,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: 'patch'
+  post_discord:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
       - if: |
           github.event_name == 'push' && 
           !contains((join(github.event.commits.*.message)), '#skip') &&
@@ -63,7 +68,7 @@ jobs:
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: info
-          details: A new version of Pokedex deployed!
+          details: A new version of Pokedex deployed! url = https://murmuring-badlands-25615.herokuapp.com/
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Build Failure
         uses: rjstone/discord-webhook-notify@v1
