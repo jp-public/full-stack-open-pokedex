@@ -59,7 +59,7 @@ jobs:
         with:
           severity: error
           text: Build Failed!
-          details: ${{ github.event.head_commit.url }}
+          details:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
     needs: [simple_deployment_pipeline]
