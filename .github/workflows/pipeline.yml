@@ -57,10 +57,10 @@ jobs:
           DEFAULT_BUMP: 'patch'
       - if: |
           github.event_name == 'push' && 
-          !contains((join(github.event.commits.*.message)), '#skip')
+          !contains((join(github.event.commits.*.message)), '#skip') &&
+          success()
         name: Deployment Success
         uses: rjstone/discord-webhook-notify@v1
-        if: success()
         with:
           severity: info
           details: A new version of Pokedex deployed!
@@ -72,4 +72,3 @@ jobs:
           severity: error
           details: Build Failed!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-      
