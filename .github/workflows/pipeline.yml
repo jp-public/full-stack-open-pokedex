@@ -42,12 +42,24 @@ jobs:
           healthcheck: 'https://${{secrets.HEROKU_APPLICATION_NAME}}.herokuapp.com/health'
           checkstring: 'ok'
           rollbackonhealthcheckfailed: true
+      - if: |
+          github.event_name == 'push' && 
+          !contains((join(github.event.commits.*.message)), '#skip') &&
+          success()
+        name: Deployment Success
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: info
+          text: A new version of Pokedex deployed!
+          details: url = 'https://${{secrets.HEROKU_APPLICATION_NAME}}.herokuapp.com
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Build Failure
         uses: rjstone/discord-webhook-notify@v1
         if: failure()
         with:
           severity: error
-          details: Build Failed!
+          text: Build Failed!
+          details: commit =  ${{ github.event.head_commit.url }}
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
     needs: [simple_deployment_pipeline]
@@ -62,18 +74,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: 'patch'
-  post_discord:
-    needs: [simple_deployment_pipeline]
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v3
-      - if: |
-          github.event_name == 'push' && 
-          !contains((join(github.event.commits.*.message)), '#skip') &&
-          success()
-        name: Deployment Success
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          severity: info
-          details: A new version of Pokedex deployed! url = 'https://${{secrets.HEROKU_APPLICATION_NAME}}.herokuapp.com
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
