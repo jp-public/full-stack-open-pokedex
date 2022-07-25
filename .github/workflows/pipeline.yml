@@ -51,7 +51,7 @@ jobs:
         with:
           severity: info
           text: A new version of Pokedex deployed!
-          details: url = 'https://${{secrets.HEROKU_APPLICATION_NAME}}.herokuapp.com
+          details: url = https://${{secrets.HEROKU_APPLICATION_NAME}}.herokuapp.com
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Build Failure
         uses: rjstone/discord-webhook-notify@v1
@@ -59,7 +59,7 @@ jobs:
         with:
           severity: error
           text: Build Failed!
-          details: commit ${{ github.event.head_commit.url }}
+          details: ${{ github.event.head_commit.url }}
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
     needs: [simple_deployment_pipeline]
