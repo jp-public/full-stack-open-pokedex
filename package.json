@@ -14,7 +14,7 @@
     "lint:fix": "eslint . --fix",
     "build": "webpack --mode production",
     "git": "git add . && git commit -m",
-    "postgit": "git push --all"
+    "postgit": "git push origin dev"
   },
   "repository": {
     "type": "git",
