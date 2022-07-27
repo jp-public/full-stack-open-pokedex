@@ -1,5 +1,7 @@
 # Full Stack open CI/CD
 
+Other CI/CD workflow: https://github.com/jp-public/anecdotes-redux-cicd
+
 This repository is used for the CI/CD module of the Full stack open course
 
 Fork the repository to complete course exercises
