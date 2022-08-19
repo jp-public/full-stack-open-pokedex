@@ -1,4 +1,4 @@
-# Full Stack open CI/CD
+# Full stack open - CI/CD
 
 This module is about implementing CI/CD workflows with Github Actions.
 
